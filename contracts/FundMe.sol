@@ -11,8 +11,8 @@ import "@chainlink/contracts/src/v0.6/vendor/SafeMathChainlink.sol";
 contract FundMe{
     using SafeMathChainlink for uint256; //Avoid overflow for all uint256
 
-    mapping(address => uint256) public addressToAmount;
-    address[] public funders; //Add the address of a funder in an array
+    mapping(address => uint256) private addressToAmount;
+    address[] private funders; //Add the address of a funder in an array
     address owner; //Address of the owner of the contract
     address goerliAddress = 0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e; //Goerli Testnet address (ETH/USD)
 
@@ -49,7 +49,7 @@ contract FundMe{
     }
 
     //Convert whatever value they send e.g. 15gwei to USD 
-    function getConversion(uint256 ethAmount) public view returns(uint256){
+    function getConversion(uint256 ethAmount) private view returns(uint256){
         uint256 ethPrice = getPrice();
         uint256 ethAmountInUSD = ((ethPrice*ethAmount) / (10**18)); //Have to divide with 10^18 which is 1 ETH in WEI
         //The answer is also in 18 decimals even though we divided with 10^18
