@@ -25,7 +25,7 @@ contract FundMe{
     function fund() public payable {
         //Set a minimum value to send
         uint256 minUSD = 50 * 10**18; //50$ * 10^18 to get the value in wei
-        //If the sended value is less than the minUSD then stop excecution.
+        //If the sended value is less than the minUSD stop excecution.
         //'require' reverts the transaction & gives back the money & the unspended gas to the sender
         require(getConversion(msg.value) >= minUSD, "You must spend more ETH!");
         addressToAmount[msg.sender] += msg.value;
@@ -55,7 +55,7 @@ contract FundMe{
         //The answer is also in 18 decimals even though we divided with 10^18
         //So if we get something with <18 numbers we add 0 at the front
         //E.G. answer = 2533896352720. So the real answer is 0.000002533896352720. This is 1 GWEI in USD
-        //If we multiply this with 10^10 we get ETH -> USD. ETH was 2,533.896352720 at the time of this programm
+        //If we multiply this with 10^10 we get ETH -> USD. ETH was 2,533.896352720 at the time of this program
         return ethAmountInUSD;
     }
 
